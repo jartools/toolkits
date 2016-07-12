@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+	<description>spring</description>
+	<bean id="propertyConfigurer" 
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> 
+        <property name="location"> 
+            <value>app.properties</value> 
+        </property> 
+    </bean>
+    <context:component-scan base-package="x2.svc.page" />
+    
+	<!-- 生成bean用的数据库连接 -->
+	<bean id="ds" class="org.apache.commons.dbcp.BasicDataSource" scope="singleton"
+		destroy-method="close">
+		<property name="driverClassName" value="${db.driver}"/>
+		<property name="url" value="${db.url}" />
+		<property name="username" value="${db.user}"/>
+		<property name="password" value="${db.pass}"/>
+		<property name="maxActive" value="64"/>
+		<property name="maxIdle" value="8"/>
+		<property name="maxWait" value="60000"/>
+		<property name="validationQuery" value="select 1 = 1"/>
+	</bean>
+	
+	<!-- 操作数据库连接 -->
+	<bean id="ds2" class="org.apache.commons.dbcp.BasicDataSource" scope="singleton"
+		destroy-method="close">
+		<property name="driverClassName" value="${db2.driver}"/>
+		<property name="url" value="${db2.url}" />
+		<property name="username" value="${db2.user}"/>
+		<property name="password" value="${db2.pass}"/>		
+		<property name="maxActive" value="61" />
+		<property name="maxIdle" value="8" />
+		<property name="maxWait" value="60000" />
+		<property name="removeAbandoned" value="true" />
+		<property name="removeAbandonedTimeout" value="10" />
+		<property name="validationQuery" value="select 1 = 1"/>
+	</bean>
+
+	<!-- 操作数据库连接 -->
+	<bean id="ds99" class="org.apache.commons.dbcp.BasicDataSource" scope="singleton"
+		destroy-method="close">
+		<property name="driverClassName" value="${db99.driver}"/>
+		<property name="url" value="${db99.url}" />
+		<property name="username" value="${db99.user}"/>
+		<property name="password" value="${db99.pass}"/>		
+		<property name="maxActive" value="61" />
+		<property name="maxIdle" value="8" />
+		<property name="maxWait" value="60000" />
+		<property name="removeAbandoned" value="true" />
+		<property name="removeAbandonedTimeout" value="10" />
+		<property name="validationQuery" value="select 1 = 1"/>
+	</bean>
+	
+</beans>
