@@ -17,17 +17,6 @@ import com.bowlong.util.MapEx;
 
 @SuppressWarnings("rawtypes")
 public class JedisTookits {
-
-	/**
-	 * redis参数配置 { "REDIS":{ "maxActiveUnlimite":-1, "maxIdleUnlimite":-1,
-	 * "testOnBorrow":true, "testOnReturn":true, "testWhileIdle":true,
-	 * "timeBetweenEvictionRunsMillis":60000,
-	 * "minEvictableIdleTimeMillis":30000, "numTestsPerEvictionRun":3000,
-	 * "maxActive":4000, "maxIdle":3000, "minIdle":10, "maxWait":10000,
-	 * "timeOut":15000, "host":"127.0.0.1", "port":4011,
-	 * "pwd":"1234567890!@#$%^&*()", "defPort":6379 } }
-	 */
-
 	static JedisPool jedisSource = null;
 	static public String Pwd = ""; // redis访问密码
 	static public int dbIndex = 0; // redis 数据库DB的index
