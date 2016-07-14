@@ -1,4 +1,4 @@
-package com.bowlong.sql.freemarker;
+package com.bowlong.third.redis;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,6 @@ import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Pipeline;
 
 import com.bowlong.lang.StrEx;
-import com.bowlong.third.redis.JedisEx;
 import com.bowlong.util.ListEx;
 import com.bowlong.util.MapEx;
 
@@ -20,30 +19,15 @@ import com.bowlong.util.MapEx;
 public class JedisTookits {
 
 	/**
-	 * redis参数配置
-	 {
-		 "REDIS":{
-			"maxActiveUnlimite":-1,
-			"maxIdleUnlimite":-1,
-			"testOnBorrow":true,
-			"testOnReturn":true,
-			"testWhileIdle":true,
-			"timeBetweenEvictionRunsMillis":60000,
-			"minEvictableIdleTimeMillis":30000,
-			"numTestsPerEvictionRun":3000,
-			"maxActive":4000,
-			"maxIdle":3000,
-			"minIdle":10,
-			"maxWait":10000,
-			"timeOut":15000,
-			"host":"127.0.0.1",
-			"port":4011,
-			"pwd":"1234567890!@#$%^&*()",
-			"defPort":6379
-		}
-	}
+	 * redis参数配置 { "REDIS":{ "maxActiveUnlimite":-1, "maxIdleUnlimite":-1,
+	 * "testOnBorrow":true, "testOnReturn":true, "testWhileIdle":true,
+	 * "timeBetweenEvictionRunsMillis":60000,
+	 * "minEvictableIdleTimeMillis":30000, "numTestsPerEvictionRun":3000,
+	 * "maxActive":4000, "maxIdle":3000, "minIdle":10, "maxWait":10000,
+	 * "timeOut":15000, "host":"127.0.0.1", "port":4011,
+	 * "pwd":"1234567890!@#$%^&*()", "defPort":6379 } }
 	 */
-	
+
 	static JedisPool jedisSource = null;
 	static public String Pwd = ""; // redis访问密码
 	static public int dbIndex = 0; // redis 数据库DB的index
@@ -78,7 +62,7 @@ public class JedisTookits {
 					maxIdle, minIdle, maxWait);
 
 			// testOnBorrow：在borrow一个jedis实例时，是否提前进行alidate操作；
-			//如果为true，则得到的jedis实例均是可用的；
+			// 如果为true，则得到的jedis实例均是可用的；
 			boolean testOnBorrow = MapEx
 					.getBoolean(redisConfig, "testOnBorrow");
 
