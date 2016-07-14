@@ -18,8 +18,15 @@ import com.bowlong.util.MapEx;
 @SuppressWarnings("rawtypes")
 public class JedisTookits {
 	static JedisPool jedisSource = null;
-	static public String Pwd = ""; // redis访问密码
-	static public int dbIndex = 0; // redis 数据库DB的index
+
+	// redis 的配置map对象
+	static protected Map orgRedisCfg = null;
+
+	// redis访问密码
+	static protected String Pwd = null;
+
+	// redis 数据库DB的index
+	static protected int dbIndex = 0;
 
 	static public JedisPool initJedisPool(int selectDb, String passwd, Map map) {
 		return getJedisPool(selectDb, passwd, map);
@@ -46,6 +53,7 @@ public class JedisTookits {
 			int timeOut = MapEx.getInt(redisConfig, "timeOut");
 			int port = MapEx.getInt(redisConfig, "port");
 			String password = MapEx.getString(redisConfig, "pwd");
+			int indexDB = MapEx.getInt(redisConfig, "dbIndex");
 
 			JedisPoolConfig config = JedisEx.newJedisPoolConfig(maxActive,
 					maxIdle, minIdle, maxWait);
@@ -86,22 +94,34 @@ public class JedisTookits {
 			config.setNumTestsPerEvictionRun(numTestsPerEvictionRun);
 			config.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);
 
-			boolean isNullPass = StrEx.isEmpty(password);
 			boolean isNullPwd = StrEx.isEmpty(Pwd);
+			if (isNullPwd) {
+				if (StrEx.isEmpty(password)) {
+					Pwd = null;
+				} else {
+					Pwd = password;
+					isNullPwd = false;
+				}
+			}
 
-			if (isNullPass && isNullPwd && dbIndex == 0) {
+			boolean isZeroDBIndex = dbIndex <= 0;
+			if (isZeroDBIndex) {
+				if (indexDB <= 0) {
+					dbIndex = 0;
+				} else {
+					dbIndex = indexDB;
+					isZeroDBIndex = false;
+				}
+			}
+
+			if (isZeroDBIndex && isNullPwd) {
 				jedisSource = new JedisPool(config, host, port, timeOut);
 			} else {
-				if (isNullPwd) {
-					if (!isNullPass)
-						Pwd = password;
-					else
-						Pwd = null;
-				}
-
 				jedisSource = new JedisPool(config, host, port, timeOut, Pwd,
 						dbIndex);
 			}
+
+			orgRedisCfg = redisConfig;
 		}
 		return jedisSource;
 	}
@@ -334,5 +354,10 @@ public class JedisTookits {
 			returnJedis(r);
 		}
 		return result;
+	}
+
+	// 取得 当前redis的配置文件
+	static public Map getOrgRedisCfg() {
+		return orgRedisCfg;
 	}
 }

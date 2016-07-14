@@ -283,8 +283,6 @@ public class SqlEx extends Toolkit {
 	public static final DruidDataSource newDruidMysqlDataSource(String host,
 			int port, String db, String username, String password) {
 		String encoding = Encoding.UTF_8;
-		// String username = "root";
-		// String password = "";
 		int maxActive = 64;
 		int initialSize = 2;
 		int maxWait = 60000;
