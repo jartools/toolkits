@@ -100,6 +100,19 @@ public class N4HttpResponse extends N4HttpResp {
 		String ContentType = "application/Json; charset=UTF-8";
 		sendAll(chn, buff, ContentType);
 	}
+	
+	public static void sendCss(Channel chn, String content) throws Exception {
+		if (content == null) {
+			content = "";
+		}
+		byte[] buff = content.getBytes("UTF-8");
+		sendCss(chn, buff);
+	}
+
+	public static void sendCss(Channel chn, byte[] buff) throws Exception {
+		String ContentType = "text/css; charset=UTF-8";
+		sendAll(chn, buff, ContentType);
+	}
 
 	public static void sendByChunked(Channel chn, String content)
 			throws Exception {
