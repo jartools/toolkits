@@ -58,6 +58,15 @@ public class N4HttpResponse extends N4HttpResp {
 		byte[] buff = content.getBytes("UTF-8");
 		send(chn, buff);
 	}
+	
+	protected static void sendAll(Channel chn, String content, String ContentType) throws Exception {
+		if (content == null) {
+			content = "";
+		}
+
+		byte[] buff = content.getBytes("UTF-8");
+		sendAll(chn, buff, ContentType);
+	}
 
 	protected static void sendAll(Channel chn, byte[] buff, String ContentType) {
 		ByteBuf buf = N4B2ByteBuf.buffer();
@@ -84,6 +93,19 @@ public class N4HttpResponse extends N4HttpResp {
 	// 直接写内容
 	public static void send(Channel chn, byte[] buff) throws Exception {
 		String ContentType = "text/html; charset=UTF-8";
+		sendAll(chn, buff, ContentType);
+	}
+	
+	public static void sendTxt(Channel chn, String content) throws Exception {
+		if (content == null) {
+			content = "";
+		}
+		byte[] buff = content.getBytes("UTF-8");
+		sendTxt(chn, buff);
+	}
+
+	public static void sendTxt(Channel chn, byte[] buff) throws Exception {
+		String ContentType = "text/plain; charset=UTF-8";
 		sendAll(chn, buff, ContentType);
 	}
 
