@@ -2,7 +2,6 @@ package com.bowlong.third.netty4.httphand;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.handler.codec.http.HttpContent;
-import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.HttpRequest;
 import io.netty.handler.codec.http.QueryStringDecoder;
@@ -171,10 +170,30 @@ public class N4HttpResp implements Serializable {
 		return map;
 	}
 
+	static public Map<String, String> getMapByPostDecoderBody(Object msgObj) {
+		Map<String, String> map = new HashMap<String, String>();
+		HttpPostRequestDecoder msg = getPostDecoder(msgObj);
+		return getMapByPostDecoderBody(msg, map);
+	}
+
+	static HttpPostRequestDecoder getPostDecoder(Object msg) {
+		HttpPostRequestDecoder post = null;
+		if (msg instanceof HttpRequest) {
+			HttpRequest request = (HttpRequest) msg;
+			if (request.getMethod().equals(HttpMethod.POST)) {
+				try {
+					post = getDecoderByPost(request);
+				} catch (Exception e) {
+					log.error(ExceptionEx.e2s(e));
+				}
+			}
+		}
+		return post;
+	}
+
 	/*** 取得 传送过来的参数map对象(处理了get,post) ***/
 	static public Map<String, String> getMapKVByMsg(Object msg) {
 		Map<String, String> map = new HashMap<String, String>();
-		HttpPostRequestDecoder post = null;
 		if (msg instanceof HttpRequest) {
 			HttpRequest request = (HttpRequest) msg;
 			if (request.getMethod().equals(HttpMethod.GET)) {
@@ -184,15 +203,10 @@ public class N4HttpResp implements Serializable {
 						map.put(item.getKey(), item.getValue());
 					}
 				}
-			} else if (request.getMethod().equals(HttpMethod.POST)) {
-				try {
-					post = getDecoderByPost(request);
-				} catch (Exception e) {
-					log.error(ExceptionEx.e2s(e));
-				}
 			}
 		}
 
+		HttpPostRequestDecoder post = getPostDecoder(msg);
 		if (post != null) {
 			if (msg instanceof HttpContent) {
 				HttpContent chunk = (HttpContent) msg;
@@ -201,7 +215,6 @@ public class N4HttpResp implements Serializable {
 			} else {
 				map = getMapByPostDecoderBody(post, map);
 			}
-
 		}
 
 		return map;
@@ -209,12 +222,12 @@ public class N4HttpResp implements Serializable {
 
 	/*** 取得 传送过来的字节流对象 ***/
 	static public byte[] getBytesContByMsg(Object msg) {
-		if (msg instanceof HttpRequest) {
-			HttpRequest request = (HttpRequest) msg;
-			if (HttpHeaders.isContentLengthSet(request)) {
-
-			}
-		}
+		// if (msg instanceof HttpRequest) {
+		// HttpRequest request = (HttpRequest) msg;
+		// if (HttpHeaders.isContentLengthSet(request)) {
+		//
+		// }
+		// }
 		if (msg instanceof HttpContent) {
 			HttpContent chunk = (HttpContent) msg;
 			ByteBuf content = chunk.content();
@@ -236,6 +249,7 @@ public class N4HttpResp implements Serializable {
 					charType = Encoding.UTF_8;
 				result = new String(buff, charType);
 			} catch (UnsupportedEncodingException e) {
+				log.error(ExceptionEx.e2s(e));
 			}
 		}
 		return result;
@@ -243,17 +257,8 @@ public class N4HttpResp implements Serializable {
 
 	/*** 取得 更新文件对象 ***/
 	static public FileUpload getFileByMsg(Object msg) {
-		HttpPostRequestDecoder post = null;
-		if (msg instanceof HttpRequest) {
-			HttpRequest request = ((HttpRequest) msg);
-			if (request.getMethod().equals(HttpMethod.POST)) {
-				try {
-					post = getDecoderByPost(request);
-				} catch (Exception e) {
-					log.error(ExceptionEx.e2s(e));
-				}
-			}
-		}
+		HttpPostRequestDecoder post = getPostDecoder(msg);
+
 		if (post != null) {
 			if (msg instanceof HttpContent) {
 				post.offer((HttpContent) msg);
