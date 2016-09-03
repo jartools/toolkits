@@ -168,10 +168,10 @@ public class MapEx {
 		} else if (v instanceof Long) {
 			return ((Long) v) <= 0 ? false : true;
 		} else if (v instanceof String) {
-			if("0".equals(v)){
+			if ("0".equals(v)) {
 				return false;
 			}
-			if("1".equals(v)){
+			if ("1".equals(v)) {
 				return true;
 			}
 			return NumEx.stringToBool((String) v);
@@ -560,15 +560,17 @@ public class MapEx {
 		Map<String, String> ret = newHashMap();
 		if (isEmpty(map))
 			return ret;
+		Object keyObj, valObj;
+		String key, val;
 		for (Entry<Object, Object> entry : ((Map<Object, Object>) map)
 				.entrySet()) {
-			Object keyObj = entry.getKey();
-			Object valObj = entry.getValue();
+			keyObj = entry.getKey();
+			valObj = entry.getValue();
 			if (keyObj == null || valObj == null)
 				continue;
 
-			String key = keyObj.toString();
-			String val = valObj.toString();
+			key = keyObj.toString();
+			val = valObj.toString();
 			ret.put(key, val);
 		}
 		return ret;
@@ -578,15 +580,19 @@ public class MapEx {
 		Map<String, Integer> ret = newHashMap();
 		if (isEmpty(map))
 			return ret;
+		Object keyObj, valObj;
+		String key;
+		Integer val;
+
 		for (Entry<Object, Object> entry : ((Map<Object, Object>) map)
 				.entrySet()) {
-			Object keyObj = entry.getKey();
-			Object valObj = entry.getValue();
+			keyObj = entry.getKey();
+			valObj = entry.getValue();
 			if (keyObj == null || valObj == null)
 				continue;
 
-			String key = keyObj.toString();
-			int val = NumEx.stringToInt(valObj.toString());
+			key = keyObj.toString();
+			val = NumEx.stringToInt(valObj.toString());
 			ret.put(key, val);
 		}
 		return ret;
@@ -596,15 +602,19 @@ public class MapEx {
 		Map<Integer, String> ret = newHashMap();
 		if (isEmpty(map))
 			return ret;
+		Object keyObj, valObj;
+		Integer key;
+		String val;
+
 		for (Entry<Object, Object> entry : ((Map<Object, Object>) map)
 				.entrySet()) {
-			Object keyObj = entry.getKey();
-			Object valObj = entry.getValue();
+			keyObj = entry.getKey();
+			valObj = entry.getValue();
 			if (keyObj == null || valObj == null)
 				continue;
 
-			int key = NumEx.stringToInt(keyObj.toString());
-			String val = valObj.toString();
+			key = NumEx.stringToInt(keyObj.toString());
+			val = valObj.toString();
 			ret.put(key, val);
 		}
 		return ret;
@@ -614,15 +624,18 @@ public class MapEx {
 		Map<Integer, Integer> ret = newHashMap();
 		if (isEmpty(map))
 			return ret;
+		Object keyObj, valObj;
+		Integer key;
+		Integer val;
 		for (Entry<Object, Object> entry : ((Map<Object, Object>) map)
 				.entrySet()) {
-			Object keyObj = entry.getKey();
-			Object valObj = entry.getValue();
+			keyObj = entry.getKey();
+			valObj = entry.getValue();
 			if (keyObj == null || valObj == null)
 				continue;
 
-			int key = NumEx.stringToInt(keyObj.toString());
-			int val = NumEx.stringToInt(valObj.toString());
+			key = NumEx.stringToInt(keyObj.toString());
+			val = NumEx.stringToInt(valObj.toString());
 			ret.put(key, val);
 		}
 		return ret;
@@ -684,9 +697,10 @@ public class MapEx {
 		try {
 			sb.append("{\n");
 			Set<Entry> entrys = m.entrySet();
+			Object k, v;
 			for (Entry e : entrys) {
-				Object k = e.getKey();
-				Object v = e.getValue();
+				k = e.getKey();
+				v = e.getValue();
 				for (int i = 0; i < depth; i++)
 					sb.append("    ");
 				if (k instanceof String) {
@@ -747,19 +761,20 @@ public class MapEx {
 	}
 
 	static public Map putKvs4Map(final Map r2, final Object... objs) {
-		if(objs == null || objs.length <= 0){
+		if (objs == null || objs.length <= 0) {
 			return r2;
 		}
-		
+
 		int count = objs.length;
+		Object key, val;
 		for (int i = 0; i < count; i++) {
-			Object key = objs[i];
+			key = objs[i];
 			i++;
-			if (i >= count){
+			if (i >= count) {
 				return r2;
 			}
-			Object val = objs[i];
-			if(key == null || val == null){
+			val = objs[i];
+			if (key == null || val == null) {
 				continue;
 			}
 
@@ -770,6 +785,24 @@ public class MapEx {
 
 	static public NewMap putKvs4NewMap(final NewMap r2, final Object... objs) {
 		return (NewMap) putKvs4Map(r2, objs);
+	}
+
+	static public Map<String, Object> toMap(Map origin) {
+		if (isEmpty(origin))
+			return null;
+		Object keyObj, valObj;
+		String key;
+		Map<String, Object> ret = new HashMap<String, Object>();
+		for (Entry<Object, Object> entry : ((Map<Object, Object>) origin)
+				.entrySet()) {
+			keyObj = entry.getKey();
+			valObj = entry.getValue();
+			if (keyObj == null || valObj == null)
+				continue;
+			key = keyObj.toString();
+			ret.put(key, valObj);
+		}
+		return ret;
 	}
 
 	public static void main(String[] args) {
