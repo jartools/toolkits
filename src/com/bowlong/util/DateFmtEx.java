@@ -180,32 +180,32 @@ public class DateFmtEx {
 	}
 
 	/*** 当前系统时间字符串(yyyy-MM-dd HH:mm:ss) **/
-	static public final String nowStr1() {
+	static public final String nowStr_YMDHms() {
 		return nowStr(fmt_yyyy_MM_dd_HH_mm_ss);
 	}
 
 	/*** 当前系统时间字符串(yyyy-MM-dd) **/
-	static public final String nowStr2() {
+	static public final String nowStr_YMD() {
 		return nowStr(fmt_yyyy_MM_dd);
 	}
 
 	/*** 当前系统时间字符串(HH:mm:ss) **/
-	static public final String nowStr3() {
+	static public final String nowStrHms() {
 		return nowStr(fmt_HH_mm_ss);
 	}
 
 	/*** 当前系统时间字符串(yyyyMMddHHmmss) **/
-	static public final String nowStr4() {
+	static public final String nowStrYMDHms() {
 		return nowStr(fmt_yyyyMMddHHmmss);
 	}
 
 	/*** 当前系统时间字符串(yyyyMMdd) **/
-	static public final String nowStr5() {
+	static public final String nowStrYMD() {
 		return nowStr(fmt_yyyyMMdd);
 	}
 
 	/*** 当前系统时间字符串(yyyyMM) **/
-	static public final String nowStr6() {
+	static public final String nowStrYM() {
 		return nowStr(fmt_yyyyMM);
 	}
 
@@ -214,17 +214,17 @@ public class DateFmtEx {
 	}
 
 	/*** 转换为字符串格式(yyyy-MM-dd HH:mm:ss) **/
-	static public final String format1(long ms) {
-		return format1(parse2Date(ms));
+	static public final String format_YMDHms(long ms) {
+		return format_YMDHms(parse2Date(ms));
 	}
 
 	/*** 转换为字符串格式(yyyy-MM-dd HH:mm:ss) **/
-	static public final String format1(Calendar v) {
-		return format1(parse2Date(v));
+	static public final String format_YMDHms(Calendar v) {
+		return format_YMDHms(parse2Date(v));
 	}
 
 	/*** 转换为字符串格式(yyyy-MM-dd HH:mm:ss) **/
-	static public final String format1(Date v) {
+	static public final String format_YMDHms(Date v) {
 		return formatStr(v, fmt_yyyy_MM_dd_HH_mm_ss);
 	}
 
