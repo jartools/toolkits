@@ -820,21 +820,18 @@ public class TkitBase extends TkitOrigin {
 	}
 
 	static public final String nStr(long n) {
-		if (n < -1000000)
-			return ((int) (n / 1000000)) + "M";
-		if (n < -10000)
-			return ((int) (n / 10000)) + "W";
-		if (n < -1000)
-			return ((int) (n / 1000)) + "K";
-		if (n < 0)
-			return "" + n;
-		else if (n < 1000)
-			return "" + n;
-		else if (n < 10000)
-			return ((int) (n / 1000)) + "K";
-		else if (n < 1000000)
-			return ((int) (n / 10000)) + "W";
-		else
-			return ((int) (n / 1000000)) + "M";
+		boolean isNegative = n < 0;
+		n = Math.abs(n);
+		String vRet = "";
+		if (n >= 1000000) {
+			vRet = (n / 1000000) + "M";
+		} else if (n >= 10000) {
+			vRet = (n / 10000) + "W";
+		} else if (n >= 1000) {
+			vRet = (n / 10000) + "K";
+		} else {
+			vRet = n + "";
+		}
+		return isNegative ? ("-" + vRet) : vRet;
 	}
 }
