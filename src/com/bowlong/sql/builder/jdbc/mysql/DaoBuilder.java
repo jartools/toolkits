@@ -86,11 +86,11 @@ public class DaoBuilder extends Toolkit {
 		sn(sb, "    }");
 		sn(sb, "");
 		sn(sb, "    public static String TABLEMM() {");
-		sn(sb, "        return TABLE + DateEx.nowStr6();");
+		sn(sb, "        return TABLE + DateEx.nowStrYM();");
 		sn(sb, "    }");
 		sn(sb, "");
 		sn(sb, "    public static String TABLEDD() {");
-		sn(sb, "        return TABLE + DateEx.nowStr5();");
+		sn(sb, "        return TABLE + DateEx.nowStrYMD();");
 		sn(sb, "    }");
 		sn(sb, "");
 		sn(sb, "    public static String[] carrays ={%s};", cols1);

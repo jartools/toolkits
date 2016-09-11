@@ -190,7 +190,7 @@ public class DateFmtEx {
 	}
 
 	/*** 当前系统时间字符串(HH:mm:ss) **/
-	static public final String nowStrHms() {
+	static public final String nowStr_Hms() {
 		return nowStr(fmt_HH_mm_ss);
 	}
 

@@ -322,11 +322,11 @@ public class TkitBase extends TkitOrigin {
 	}
 
 	static public final String tFmt(long ms) {
-		return DateEx.format1(ms);
+		return DateEx.format_YMDHms(ms);
 	}
 
 	static public final String tFmt(Date d) {
-		return DateEx.format1(d);
+		return DateEx.format_YMDHms(d);
 	}
 
 	static public final String s(String s, Object... args) {
