@@ -25,7 +25,7 @@ public class NewCpWrList<E> extends CopyOnWriteArrayList<E> {
 		return new NewCpWrList();
 	}
 
-	public static NewCpWrList create(List list) {
+	public static <E> NewCpWrList<E> create(List<E> list) {
 		if (list instanceof NewCpWrList)
 			return (NewCpWrList) list;
 
@@ -34,17 +34,17 @@ public class NewCpWrList<E> extends CopyOnWriteArrayList<E> {
 		return ret;
 	}
 
-	public static NewCpWrList newly(List list) {
+	public static <E> NewCpWrList<E> newly(List<E> list) {
 		return create(list);
 	}
 
-	public static NewCpWrList create(Collection c) {
-		NewCpWrList ret = new NewCpWrList();
+	public static <E> NewCpWrList<E> create(Collection<E> c) {
+		NewCpWrList<E> ret = new NewCpWrList<E>();
 		ret.addAll(c);
 		return ret;
 	}
 
-	public static NewCpWrList newly(Collection c) {
+	public static <E> NewCpWrList<E> newly(Collection<E> c) {
 		return create(c);
 	}
 
