@@ -12,6 +12,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -803,6 +804,62 @@ public class MapEx {
 			ret.put(key, valObj);
 		}
 		return ret;
+	}
+	
+	// 清除空的，包含数字小于0的
+	static public Map toMapClear(Map map) {
+		return toMapClear(map,true);
+	}
+	
+	static public Map toMapClear(Map map,boolean isLessZeroNum) {
+		List listKeys = new ArrayList();
+		listKeys.addAll(map.keySet());
+		int lens = listKeys.size();
+		for (int i = 0; i < lens; i++) {
+			Object key = listKeys.get(i);
+			if(key == null){
+				map.remove(key);
+				continue;
+			}
+			
+			Object val = map.get(key);
+			if (val == null) {
+				map.remove(key);
+				continue;
+			}
+			
+			String valStr = val.toString().trim();
+			if (valStr.isEmpty()) {
+				map.remove(key);
+				continue;
+			}
+			
+			if(!isLessZeroNum)
+				continue;
+			
+			if (val instanceof Double) {
+				double v = (double) val;
+				if (v <= 0) {
+					map.remove(key);
+				}
+			} else if (val instanceof Float) {
+				Float v = (Float) val;
+				if (v <= 0) {
+					map.remove(key);
+				}
+			}else if (val instanceof Long) {
+				Long v = (Long) val;
+				if (v <= 0) {
+					map.remove(key);
+				}
+			}else if (val instanceof Integer) {
+				int v = (int) val;
+				if (v <= 0) {
+					map.remove(key);
+				}
+			}
+		}
+		return map;
 	}
 
 	public static void main(String[] args) {
