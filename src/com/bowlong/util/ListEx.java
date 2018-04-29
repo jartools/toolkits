@@ -458,20 +458,39 @@ public class ListEx {
 		return src;
 	}
 
-	static public final List rndList(List src) {
-		return RndEx.rndList(src);
+	/*** 将list都随机打乱 **/
+	public static final List rndList(final List srcList) {
+		List ret = new ArrayList();
+		List list = new Vector();
+		list.addAll(srcList);
+
+		int num = list.size();
+		for (int n = num; n > 0; n--) {
+			int p = RndEx.nextInt(n);
+			Object e = list.remove(p);
+			ret.add(e);
+		}
+		return ret;
+	}
+	
+	/*** 将泛型list都随机打乱 **/
+	public static final <T> List<T> rndListT(final List<T> srcList) {
+		return (List<T>) rndList(srcList);
 	}
 
-	static public final <T> List<T> rndListT(List<T> src) {
-		return RndEx.rndListT(src);
+	public static final List subRndList(final List srcList, final int subSize) {
+		if (srcList == null)
+			return srcList;
+		int len = srcList.size();
+		List result = rndList(srcList);
+		if (len <= subSize)
+			return result;
+		return result.subList(0, subSize);
 	}
 
-	static public final List subRndList(List src, int subsize) {
-		return RndEx.subRndList(src, subsize);
-	}
-
-	static public final <T> List<T> subRndListT(List<T> src, int subsize) {
-		return RndEx.subRndListT(src, subsize);
+	public static final <T> List<T> subRndListT(final List<T> srcList,
+			final int subSize) {
+		return (List<T>) subRndList(srcList, subSize);
 	}
 
 	public static final List sort(List src) {
