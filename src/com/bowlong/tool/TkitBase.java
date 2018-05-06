@@ -110,15 +110,6 @@ public class TkitBase extends TkitOrigin {
 	}
 
 	// ///////////////////////////////////////////////////
-	static public final boolean nextBool() {
-		return RndEx.nextBoolean();
-	}
-
-	static public final boolean nextBool(int max, int f) {
-		int v = nextInt(max);
-		return (v < f);
-	}
-
 	static public final <T> T rand(List objs) {
 		if (objs == null || objs.isEmpty())
 			return null;
@@ -128,38 +119,12 @@ public class TkitBase extends TkitOrigin {
 		int i = RndEx.nextInt(0, objs.size());
 		return (T) objs.get(i);
 	}
-
-	static public final int nextInt(int max) {
-		if (max <= 0)
-			return 0;
-		return RndEx.nextInt(max);
-	}
-
-	static public final int nextInt(int f, int t) {
-		if (t <= f)
-			return f;
-		return RndEx.nextInt(t - f) + f;
-	}
-
+	
 	static public final String pn(int n) {
 		return n > 0 ? "+" + n : String.valueOf(n);
 	}
-
-	static public final List<Map> sort(List m1, final String key) {
-		Collections.sort(m1, new Comparator<Map>() {
-			public int compare(Map o1, Map o2) {
-				Object v1 = o1.get(key);
-				Object v2 = o2.get(key);
-				if (v1 == null || v2 == null)
-					return 0;
-				return compareTo(v1, v2);
-			}
-		});
-		return m1;
-	}
-
+	
 	static public final int compareTo(Object v1, Object v2) {
-
 		if (v1 == null || v2 == null)
 			return 0;
 
@@ -345,15 +310,7 @@ public class TkitBase extends TkitOrigin {
 	static public final void sn(StringBuffer sb, String s, Object... args) {
 		s(sb, s + "\r\n", args);
 	}
-
-	static public final String fmt(String s, Object... args) {
-		return String.format(s, args);
-	}
-
-	static public final String format(String s, Object... args) {
-		return String.format(s, args);
-	}
-
+	
 	// 带1位小数
 	static public final String n2s(int i) {
 		if (i < 1000)
