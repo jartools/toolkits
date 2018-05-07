@@ -49,15 +49,7 @@ public class MapEx {
 	public static final Map singletonEmptyMap() {
 		return singletonEmptyMap;
 	}
-
-	public static final MapBuilder builder() {
-		return MapBuilder.builder();
-	}
-
-	public static final MapBuilder builder(Map map) {
-		return MapBuilder.builder(map);
-	}
-
+	
 	public static final Map newMap() {
 		return new Hashtable();
 	}
@@ -863,22 +855,6 @@ public class MapEx {
 	}
 
 	public static void main(String[] args) {
-		// 也支持MapEx.builder(map)传入一个map的情况,增减数据
-		Map m = MapEx.builder().put("abc", "abc").put(123, 123).put(0.13, true)
-				.toMap();
-		Map m2 = MapEx.builder().put("abc2", "abc2").put(123, 123)
-				.put(0.13, true).toMap();
-		// System.out.println(m);
-		// {0.13=true, abc=abc, 123=123}
-
-		// 也支持ListEx.builder(list)传入一个list的情况,增减数据
-		List l = ListEx.builder().add(123).add("abc").add(false).toList();
-		System.out.println(ListEx.formatString(l));
-		// [123, abc, false]
-		m.put("m2", m2);
-		m.put("list", l);
-		System.out.println(formatString(m));
-
 		// Map colorMap = toMap(new Object[][] { { "RED", 0xFF0000 }, { "GREEN",
 		// 0x00FF00 }, { "BLUE", 0x0000FF } });
 		//

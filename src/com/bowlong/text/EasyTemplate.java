@@ -11,7 +11,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import com.bowlong.objpool.StringBuilderPool;
-import com.bowlong.util.MapEx;
+import com.bowlong.util.MapBuilder;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class EasyTemplate {
@@ -126,7 +126,7 @@ public class EasyTemplate {
 
 	public static void main(String[] args) throws Exception {
 		String str = EasyTemplate.make(
-				"aaaabbbbccc1 ${abc.name} [你好] 1cccc $[a]", MapEx.builder()
+				"aaaabbbbccc1 ${abc.name} [你好] 1cccc $[a]", MapBuilder.builder()
 						.put("abc.name", "xxxxxxxxx").put("a", "__%[x够x]__")
 						.toMap());
 		System.out.println(str);

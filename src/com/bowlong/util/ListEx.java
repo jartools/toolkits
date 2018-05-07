@@ -30,23 +30,11 @@ import com.bowlong.objpool.StringBufPool;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class ListEx {
-	// private static Random rnd;
-	// static {
-	// rnd = new Random(System.currentTimeMillis());
-	// }
-
+	
 	public static final List singletonEmptyList = new ArrayList();
 
 	public static final List singletonEmptyList() {
 		return singletonEmptyList;
-	}
-
-	public static final ListBuilder builder() {
-		return ListBuilder.builder();
-	}
-
-	public static final ListBuilder builder(List list) {
-		return ListBuilder.builder(list);
 	}
 
 	public static final List newList() {
@@ -180,7 +168,7 @@ public class ListEx {
 		return ret;
 	}
 
-	public static final int[] toIntArray(List<Integer> list) {
+	public static final int[] toArrs4Int(List<Integer> list) {
 		if (list == null || list.isEmpty())
 			return new int[0];
 
@@ -196,24 +184,12 @@ public class ListEx {
 		return result;
 	}
 
-	public static final int[] toIntArray(int... args) {
+	public static final int[] toArrs4Int(int... args) {
 		return args;
 	}
 
 	public static final String[] toStrArray(List<String> list) {
-		if (list == null || list.isEmpty())
-			return new String[0];
-
-		int count = list.size();
-		String[] result = new String[count];
-
-		for (int i = 0; i < count; i++) {
-			String v = list.get(i);
-			if (v == null)
-				result[i] = "";
-			result[i] = v;
-		}
-		return result;
+		return toArrs(list,new String[0]);
 	}
 
 	public static final List toArrayList(List list) {
@@ -246,12 +222,23 @@ public class ListEx {
 		return ret;
 	}
 
-	public static final List toArrayList(Object[] array) {
-		List list = newArrayList();
+	public static final List toListByObj(Object[] array) {
+		List list = newList();
 		if (array == null)
 			return list;
 		for (Object e : array)
 			list.add(e);
+		return list;
+	}
+	
+	public static final <T> List<T> toListT(T[] arrs) {
+		List<T> list = newListT();
+		if (arrs == null || arrs.length <= 0)
+			return list;
+		
+		for (int i = 0; i < arrs.length; i++) {			
+			list.add(arrs[i]);
+		}
 		return list;
 	}
 
@@ -290,10 +277,10 @@ public class ListEx {
 	}
 	
 	/*** 转为数组对象 **/
-	static public final <T> T[] toArrs(List<T> list){
+	static public final <T> T[] toArrs(List<T> list,T[] arrs){
 		if(isEmpty(list))
-			return null;
-		return (T[])list.toArray();
+			return arrs;
+		return (T[])list.toArray(arrs);
 	}
 
 	public static final List listIt(Object... var) {
@@ -350,7 +337,7 @@ public class ListEx {
 	}
 	
 	/*** 清空并创建对象 **/
-	static public final List clear4List(List ls) {
+	static public final List clearOrNew(List ls) {
 		if (ls == null) {
 			ls = newArrayList();
 			return ls;
@@ -473,11 +460,6 @@ public class ListEx {
 		return ret;
 	}
 	
-	/*** 将泛型list都随机打乱 **/
-	public static final <T> List<T> rndListT(final List<T> srcList) {
-		return (List<T>) rndList(srcList);
-	}
-
 	public static final List subRndList(final List srcList, final int subSize) {
 		if (srcList == null)
 			return srcList;
@@ -486,6 +468,11 @@ public class ListEx {
 		if (len <= subSize)
 			return result;
 		return result.subList(0, subSize);
+	}
+
+	/*** 将泛型list都随机打乱 **/
+	public static final <T> List<T> rndListT(final List<T> srcList) {
+		return (List<T>) rndList(srcList);
 	}
 
 	public static final <T> List<T> subRndListT(final List<T> srcList,
@@ -747,5 +734,17 @@ public class ListEx {
 	// //////////////////////////////////////////////////
 
 	public static void main(String[] args) {
+		List<Integer> list = new ArrayList<Integer>();
+		for (int i = 0; i < 50; i++) {
+			String str = RndEx.nextString(i);
+			System.out.println(i + ":" + str);
+			list.add(i);
+		}
+		List<Integer> rndList = rndListT(list);
+		List<Integer> subList = subRndListT(list, 400);
+		System.out.println("==== list =====");
+		System.out.println(list);
+		System.out.println(rndList);
+		System.out.println(subList);
 	}
 }
